@@ -65,8 +65,16 @@ func main() {
 		&cli.StringFlag{
 			Name:     "token",
 			EnvVars:  []string{"GITHUB_TOKEN"},
+			FilePath: os.Getenv("DISTRIBUTAREPO_GITHUB_TOKEN_FILE"),
 			Usage:    "GitHub token",
 			Category: "GitHub repository:",
+			Action: func(cliCtx *cli.Context, value string) error {
+				if value != "" {
+					_ = cliCtx.Set("token", strings.TrimSpace(value))
+				}
+
+				return nil
+			},
 		},
 		&cli.StringFlag{
 			Name:        "format",
