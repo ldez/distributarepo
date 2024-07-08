@@ -1,0 +1,153 @@
+version: 2
+project_name: distributarepo
+
+builds:
+  - binary: distributarepo
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+    goos:
+      - windows
+      - darwin
+      - linux
+      - freebsd
+      - openbsd
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    goarm:
+      - 7
+      - 6
+      - 5
+    ignore:
+      - goos: darwin
+        goarch: 386
+      - goos: openbsd
+        goarch: arm
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '(?i)^chore:'
+
+archives:
+  - id: distributarepo
+    name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}{{ if .Mips }}_{{ .Mips }}{{ end }}'
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+
+brews:
+  - repository:
+      owner: ldez
+      name: homebrew-tap
+    commit_author:
+      name: ldez
+      email: ldez@users.noreply.github.com
+    directory: Formula
+    homepage: https://github.com/ldez/distributarepo
+    description: Helper to get an overview of the forks of a GitHub repository
+    test: |
+      system "#{bin}/distributarepo -v"
+
+scoops:
+  - repository:
+      owner: ldez
+      name: scoop-bucket
+    commit_author:
+      name: ldez
+      email: ldez@users.noreply.github.com
+    homepage: https://github.com/ldez/distributarepo
+    description: Helper to get an overview of the forks of a GitHub repository
+    license: APACHE
+
+docker_manifests:
+  - name_template: 'ldez/distributarepo:{{ .Tag }}'
+    image_templates:
+      - 'ldez/distributarepo:{{ .Tag }}-amd64'
+      - 'ldez/distributarepo:{{ .Tag }}-arm64'
+      - 'ldez/distributarepo:{{ .Tag }}-armv7'
+  - name_template: 'ldez/distributarepo:latest'
+    image_templates:
+      - 'ldez/distributarepo:{{ .Tag }}-amd64'
+      - 'ldez/distributarepo:{{ .Tag }}-arm64'
+      - 'ldez/distributarepo:{{ .Tag }}-armv7'
+  - name_template: 'ldez/distributarepo:v{{ .Major }}.{{ .Minor }}'
+    image_templates:
+      - 'ldez/distributarepo:v{{ .Major }}.{{ .Minor }}-amd64'
+      - 'ldez/distributarepo:v{{ .Major }}.{{ .Minor }}-arm64'
+      - 'ldez/distributarepo:v{{ .Major }}.{{ .Minor }}-armv7'
+
+dockers:
+  - use: buildx
+    goos: linux
+    goarch: amd64
+    dockerfile: buildx.Dockerfile
+    image_templates:
+      - 'ldez/distributarepo:latest-amd64'
+      - 'ldez/distributarepo:{{ .Tag }}-amd64'
+      - 'ldez/distributarepo:v{{ .Major }}.{{ .Minor }}-amd64'
+    build_flag_templates:
+      - '--pull'
+      # https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
+      - '--label=org.opencontainers.image.title={{.ProjectName}}'
+      - '--label=org.opencontainers.image.description=Helper to get an overview of the forks of a GitHub repository'
+      - '--label=org.opencontainers.image.source={{.GitURL}}'
+      - '--label=org.opencontainers.image.url={{.GitURL}}'
+      - '--label=org.opencontainers.image.documentation=https://github.com/ldez/distributarepo?tab=readme-ov-file'
+      - '--label=org.opencontainers.image.created={{.Date}}'
+      - '--label=org.opencontainers.image.revision={{.FullCommit}}'
+      - '--label=org.opencontainers.image.version={{.Version}}'
+      - '--platform=linux/amd64'
+
+  - use: buildx
+    goos: linux
+    goarch: arm64
+    dockerfile: buildx.Dockerfile
+    image_templates:
+      - 'ldez/distributarepo:latest-arm64'
+      - 'ldez/distributarepo:{{ .Tag }}-arm64'
+      - 'ldez/distributarepo:v{{ .Major }}.{{ .Minor }}-arm64'
+    build_flag_templates:
+      - '--pull'
+      # https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
+      - '--label=org.opencontainers.image.title={{.ProjectName}}'
+      - '--label=org.opencontainers.image.description=Helper to get an overview of the forks of a GitHub repository'
+      - '--label=org.opencontainers.image.source={{.GitURL}}'
+      - '--label=org.opencontainers.image.url={{.GitURL}}'
+      - '--label=org.opencontainers.image.documentation=https://github.com/ldez/distributarepo?tab=readme-ov-file'
+      - '--label=org.opencontainers.image.created={{.Date}}'
+      - '--label=org.opencontainers.image.revision={{.FullCommit}}'
+      - '--label=org.opencontainers.image.version={{.Version}}'
+      - '--platform=linux/arm64'
+
+  - use: buildx
+    goos: linux
+    goarch: arm
+    goarm: '7'
+    dockerfile: buildx.Dockerfile
+    image_templates:
+      - 'ldez/distributarepo:latest-armv7'
+      - 'ldez/distributarepo:{{ .Tag }}-armv7'
+      - 'ldez/distributarepo:v{{ .Major }}.{{ .Minor }}-armv7'
+    build_flag_templates:
+      - '--pull'
+      # https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
+      - '--label=org.opencontainers.image.title={{.ProjectName}}'
+      - '--label=org.opencontainers.image.description=Helper to get an overview of the forks of a GitHub repository'
+      - '--label=org.opencontainers.image.source={{.GitURL}}'
+      - '--label=org.opencontainers.image.url={{.GitURL}}'
+      - '--label=org.opencontainers.image.documentation=https://github.com/ldez/distributarepo?tab=readme-ov-file'
+      - '--label=org.opencontainers.image.created={{.Date}}'
+      - '--label=org.opencontainers.image.revision={{.FullCommit}}'
+      - '--label=org.opencontainers.image.version={{.Version}}'
+      - '--platform=linux/arm/v7'
