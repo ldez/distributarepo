@@ -78,7 +78,7 @@ GLOBAL OPTIONS:
    --help, -h     show help
    --version, -v  print the version
 
-   GitHub repository:
+   GitHub Repository:
 
    --owner value, -o value  GitHub owner of the repository
    --repo value, -r value   Name of the GitHub repository

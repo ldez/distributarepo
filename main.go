@@ -52,14 +52,14 @@ func main() {
 			Name:     "owner",
 			Aliases:  []string{"o"},
 			Usage:    "GitHub owner of the repository",
-			Category: "GitHub repository:",
+			Category: "GitHub Repository:",
 			Required: true,
 		},
 		&cli.StringFlag{
 			Name:     "repo",
 			Aliases:  []string{"r"},
 			Usage:    "Name of the GitHub repository",
-			Category: "GitHub repository:",
+			Category: "GitHub Repository:",
 			Required: true,
 		},
 		&cli.StringFlag{
@@ -67,7 +67,7 @@ func main() {
 			EnvVars:  []string{"GITHUB_TOKEN"},
 			FilePath: os.Getenv("DISTRIBUTAREPO_GITHUB_TOKEN_FILE"),
 			Usage:    "GitHub token",
-			Category: "GitHub repository:",
+			Category: "GitHub Repository:",
 			Action: func(cliCtx *cli.Context, value string) error {
 				if value != "" {
 					_ = cliCtx.Set("token", strings.TrimSpace(value))
