@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -211,6 +212,18 @@ func (d *Distributary) run(ctx context.Context, formatter Formatter) error {
 
 		results = append(results, result)
 	}
+
+	slices.SortFunc(results, func(a, b *Result) int {
+		if a.Ahead > b.Ahead {
+			return -1
+		}
+
+		if a.Ahead < b.Ahead {
+			return 1
+		}
+
+		return 0
+	})
 
 	err = formatter(d.writer, results)
 	if err != nil {
