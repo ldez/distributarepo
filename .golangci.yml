@@ -1,0 +1,96 @@
+run:
+  timeout: 2m
+
+linters-settings:
+  govet:
+    enable-all: true
+    disable:
+      - fieldalignment
+  gocyclo:
+    min-complexity: 15
+  goconst:
+    min-len: 5
+    min-occurrences: 3
+  mnd:
+    ignored-functions:
+      - os.*
+  misspell:
+    locale: US
+  funlen:
+    lines: -1
+    statements: 50
+  godox:
+    keywords:
+      - FIXME
+  gofumpt:
+    extra-rules: true
+  depguard:
+    rules:
+      main:
+        deny:
+          - pkg: "github.com/instana/testify"
+            desc: not allowed
+          - pkg: "github.com/pkg/errors"
+            desc: Should be replaced by standard lib errors package
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - style
+      - performance
+    disabled-checks:
+      - sloppyReassign
+      - rangeValCopy
+      - octalLiteral
+      - paramTypeCombine # already handle by gofumpt.extra-rules
+    settings:
+      hugeParam:
+        sizeThreshold: 220
+  forbidigo:
+    forbid:
+      - ^print(ln)?$
+      - ^spew\.Print(f|ln)?$
+      - ^spew\.Dump$
+  tagliatelle:
+    case:
+      rules:
+        json: goCamel
+        csv: goCamel
+  gosec:
+    excludes:
+      - G204
+  tagalign:
+    align: false
+    order:
+      - json
+      - csv
+
+linters:
+  enable-all: true
+  disable:
+    - execinquery # deprecated
+    - gomnd # deprecated
+    - sqlclosecheck # not relevant (SQL)
+    - rowserrcheck # not relevant (SQL)
+    - cyclop # duplicate of gocyclo
+    - lll
+    - err113
+    - prealloc
+    - testpackage
+    - paralleltest
+    - exhaustive
+    - exhaustruct
+    - varnamelen
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude:
+    - 'package-comments: should have a package comment'
+
+output:
+  show-stats: true
+  sort-results: true
+  sort-order:
+    - linter
+    - file
