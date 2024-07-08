@@ -2,32 +2,11 @@
 
 Helper to get an overview of the forks of a GitHub repository.
 
-```
-NAME:
-   distributarepo - Helper to get an overview of the forks of a GitHub repository.
-
-USAGE:
-   distributarepo [global options] command [command options] 
-
-COMMANDS:
-   help, h  Shows a list of commands or help for one command
-
-GLOBAL OPTIONS:
-   --owner value, -o value   GitHub owner of the repository
-   --repo value, -r value    Name of the GitHub repository
-   --token value             GitHub token [$GITHUB_TOKEN]
-   --format value, -f value  format output: csv, json, md, markdown (default: "markdown")
-   --output value            output file (default: stdout)
-   --help, -h                show help
-   --version, -v             print the version
-```
-
-_[distributary](https://en.wikipedia.org/wiki/Distributary)_
-
+Inspired by [useful-forks](https://github.com/useful-forks/useful-forks.github.io) but as a CLI.
 
 ## Examples
 
-<details><summary>Markdown</summary>
+Markdown:
 
 ```console
 $ distributarepo -o "gofrs" -r "flock"
@@ -49,8 +28,6 @@ $ distributarepo -o "gofrs" -r "flock"
 | [wataash/flock](https://github.com/wataash/flock)                   | [1](https://github.com/gofrs/flock/compare/main...wataash:flock:master)          |     68 |     0 |     0 |      0 |
 | [virtuald/go-flock](https://github.com/virtuald/go-flock)           | [4](https://github.com/gofrs/flock/compare/main...virtuald:go-flock:master)      |     93 |     0 |     0 |      0 |
 ```
-
-</details>
 
 <details><summary>JSON</summary>
 
@@ -84,3 +61,33 @@ https://github.com/virtuald/go-flock,4,https://github.com/gofrs/flock/compare/ma
 ```
 
 </details>
+
+## Help
+
+```
+NAME:
+   distributarepo - Helper to get an overview of the forks of a GitHub repository.
+
+USAGE:
+   distributarepo [global options] command [command options] 
+
+COMMANDS:
+   help, h  Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --help, -h     show help
+   --version, -v  print the version
+
+   GitHub repository:
+
+   --owner value, -o value  GitHub owner of the repository
+   --repo value, -r value   Name of the GitHub repository
+   --token value            GitHub token [$GITHUB_TOKEN]
+
+   Output:
+
+   --format value, -f value  Output format: csv, json, md, markdown (default: markdown)
+   --output value            output file (default: stdout)
+```
+
+_[distributary](https://en.wikipedia.org/wiki/Distributary)_
