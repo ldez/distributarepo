@@ -213,17 +213,7 @@ func (d *Distributary) run(ctx context.Context, formatter Formatter) error {
 		results = append(results, result)
 	}
 
-	slices.SortFunc(results, func(a, b *Result) int {
-		if a.Ahead > b.Ahead {
-			return -1
-		}
-
-		if a.Ahead < b.Ahead {
-			return 1
-		}
-
-		return 0
-	})
+	slices.SortFunc(results, sortResult)
 
 	err = formatter(d.writer, results)
 	if err != nil {
@@ -345,4 +335,48 @@ func newGitHubClient(ctx context.Context, token string) *github.Client {
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
 
 	return github.NewClient(oauth2.NewClient(ctx, ts))
+}
+
+func sortResult(a, b *Result) int {
+	if a.Behind > b.Behind {
+		return 1
+	}
+
+	if a.Behind < b.Behind {
+		return -1
+	}
+
+	if a.Ahead > b.Ahead {
+		return -1
+	}
+
+	if a.Ahead < b.Ahead {
+		return 1
+	}
+
+	if a.Stars > b.Stars {
+		return -1
+	}
+
+	if a.Stars < b.Stars {
+		return 1
+	}
+
+	if a.Issues > b.Issues {
+		return -1
+	}
+
+	if a.Issues < b.Issues {
+		return 1
+	}
+
+	if a.Forks > b.Forks {
+		return -1
+	}
+
+	if a.Forks < b.Forks {
+		return 1
+	}
+
+	return 0
 }

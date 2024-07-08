@@ -87,6 +87,13 @@ issues:
   max-same-issues: 0
   exclude:
     - 'package-comments: should have a package comment'
+  exclude-rules:
+    - path: (.+)_test.go
+      linters:
+        - funlen
+        - goconst
+        - maintidx
+        - dupl
 
 output:
   show-stats: true
