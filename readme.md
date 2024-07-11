@@ -2,7 +2,7 @@
 
 Helper to get an overview of the forks of a GitHub repository.
 
-Inspired by [useful-forks](https://github.com/useful-forks/useful-forks.github.io) but as a CLI.
+Inspired by [useful-forks](https://github.com/useful-forks/useful-forks.github.io) but as a CLI and faster.
 
 ## Examples
 
