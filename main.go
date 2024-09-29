@@ -23,7 +23,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
-const maxWorkers = 15
+const maxWorkers = 20
 
 var version = "devel"
 
