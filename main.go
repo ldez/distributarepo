@@ -176,9 +176,10 @@ func (d *Distributary) run(ctx context.Context, formatter Formatter) error {
 		close(resultsChan)
 	}()
 
-	options := &github.RepositoryListForksOptions{}
-
 	go func() {
+		// Note: when `Sort: "stargazers"` a lot of duplicates are produced.
+		options := &github.RepositoryListForksOptions{}
+
 		for {
 			forks, resp, errG := d.client.Repositories.ListForks(ctx, d.owner, d.repoName, options)
 			if errG != nil {
