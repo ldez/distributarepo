@@ -237,7 +237,7 @@ func (d *Distributary) work(ctx context.Context, defaultBranch string, forkChan 
 			log.Fatal(err)
 		}
 
-		if commits.GetAheadBy() == 0 && commits.GetBehindBy() >= 0 {
+		if commits.GetTotalCommits() == 0 || commits.GetAheadBy() == 0 && commits.GetBehindBy() >= 0 {
 			continue
 		}
 
