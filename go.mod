@@ -1,18 +1,18 @@
 module github.com/ldez/distributarepo
 
-go 1.22.0
+go 1.23.0
 
 require (
-	github.com/google/go-github/v62 v62.0.0
+	github.com/google/go-github/v71 v71.0.0
 	github.com/jszwec/csvutil v1.10.0
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/stretchr/testify v1.9.0
-	github.com/urfave/cli/v2 v2.27.4
-	golang.org/x/oauth2 v0.23.0
+	github.com/stretchr/testify v1.10.0
+	github.com/urfave/cli/v2 v2.27.6
+	golang.org/x/oauth2 v0.29.0
 )
 
 require (
-	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.6 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect

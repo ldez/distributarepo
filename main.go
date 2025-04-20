@@ -16,7 +16,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/google/go-github/v62/github"
+	"github.com/google/go-github/v71/github"
 	"github.com/jszwec/csvutil"
 	"github.com/olekukonko/tablewriter"
 	"github.com/urfave/cli/v2"
